@@ -1,0 +1,52 @@
+
+
+{ 
+    
+    "mode": "All", 
+
+
+    "policyRule": { 
+        
+        "if": 
+            { 
+                "allOf": [ { "field": "type", "equals": "Microsoft.Network/networkSecurityGroups" }, 
+
+    { 
+        "count": 
+        
+            { 
+                "field": "Microsoft.Network/networkSecurityGroups/securityRules[*]", 
+
+        "where": 
+        
+            { "allOf": [ { "anyof": [ { "field": "Microsoft.Network/networkSecurityGroups/securityRules[*].sourceAddressPrefix", 
+
+
+        "notIn": [ "103.53.115.22" ] } ] } ] } }, 
+
+
+        "greater": 0 } ] }, 
+
+        "then": { "effect": "[parameters('effect')]" } 
+        
+        }, 
+
+        "parameters": { 
+    
+        "effect": { 
+        
+        "type": "String", 
+        
+        "metadata": { "displayName": "Effect", "description": "The effect determines what happens when the policy rule is evaluated to match" }, 
+        
+        "allowedValues": [ "audit", "deny" ], 
+        
+        "defaultValue": "audit" 
+
+}
+
+
+}
+
+} 
+
